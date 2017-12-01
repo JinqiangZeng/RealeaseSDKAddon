@@ -3,7 +3,7 @@ import os
 import re
 import hashlib
 
-filename = "leia_sdk-addon_test.xml"
+filename = "leia-addon.xml"
 leia_license_ref = "leia-sdk-license"
 supproted_apis = [23, 24, 25, 26, 27]
 files = [ f for f in os.listdir(".") if os.path.isfile(f)]
@@ -56,7 +56,8 @@ def build_xml(save_as_filename, supproted_apis, revision, arch_file_name, arch_f
         ET.SubElement(sdk_addon, "sdk:uses-license", {'ref': leia_license_ref})
         sdk_libs = ET.SubElement(sdk_addon, "sdk:libs")
         for lib in list_libs:
-            ET.SubElement(sdk_libs, "sdk:name").text = lib
+            sdk_lib = ET.SubElement(sdk_libs, "sdk:lib")
+            ET.SubElement(sdk_lib, "sdk:name").text = lib
         sdk_archives = ET.SubElement(sdk_addon, "sdk:archive")
         sdk_archive = ET.SubElement(sdk_archives, "sdk:archive", {'os': "any", 'arch': "any"})
         ET.SubElement(sdk_archive, "sdk:size").text = "{}".format(arch_file_size)
@@ -69,5 +70,5 @@ def build_xml(save_as_filename, supproted_apis, revision, arch_file_name, arch_f
 
 
 revision, fname, fsize, fsha1 = get_max_reviesion(files)
-build_xml("leia_sdk-addon_test.xml", supproted_apis, revision, fname, fsize, fsha1, libs)
+build_xml(filename, supproted_apis, revision, fname, fsize, fsha1, libs)
 
