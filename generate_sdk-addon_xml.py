@@ -42,7 +42,8 @@ def build_xml(save_as_filename, supproted_apis, revision, arch_file_name, arch_f
                                         'xmlns:sdk': "http://schemas.android.com/sdk/android/addon/{}".format(len(supproted_apis))
                                         })
     sdk_license = ET.SubElement(root, 'sdk:license', {'id': leia_license_ref, 'type': "text"})
-    sdk_license.text = "LEia Inc SDK EULA"
+    with open("leia-sdk-license.txt") as f:
+        sdk_license.text = f.read()
 
     for api in supproted_apis:
         sdk_addon = ET.SubElement(root, "sdk:add-on")
